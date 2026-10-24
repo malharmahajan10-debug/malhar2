@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flight Booking and Seat Management System - Project Report</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1e293b;
+    line-height: 1.55;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+
+  /* Cover / Header Section */
+  .cover-header {
+    text-align: center;
+    border-bottom: 3px double #0284c7;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+
+  .dept-title {
+    font-size: 11pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #0369a1;
+    margin-bottom: 4px;
+  }
+
+  .course-title {
+    font-size: 10pt;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 12px;
+  }
+
+  .project-badge {
+    display: inline-block;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 8.5pt;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1.main-title {
+    font-size: 18pt;
+    color: #0f172a;
+    margin: 6px 0 8px 0;
+    line-height: 1.25;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .sub-title {
+    font-size: 10pt;
+    font-style: italic;
+    color: #475569;
+    margin: 0 0 16px 0;
+  }
+
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 9pt;
+  }
+
+  table.students-table th, table.students-table td {
+    border: 1px solid #cbd5e1;
+    padding: 6px 10px;
+    text-align: left;
+  }
+
+  table.students-table th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  table.styled-table th, table.styled-table td {
+    border: 1px solid #e2e8f0;
+    padding: 6px 8px;
+    text-align: left;
+  }
+
+  table.styled-table th {
+    background-color: #0369a1;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 8.5pt;
+  }
+
+  table.styled-table tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  /* Headings */
+  h2.section-heading {
+    font-size: 12.5pt;
+    color: #0369a1;
+    border-bottom: 2px solid #0284c7;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    page-break-after: avoid;
+  }
+
+  h3.sub-heading {
+    font-size: 10.5pt;
+    color: #0f172a;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: 700;
+    page-break-after: avoid;
+  }
+
+  p {
+    margin: 6px 0;
+    text-align: justify;
+  }
+
+  ul, ol {
+    margin: 6px 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  /* Callouts & Boxes */
+  .callout-box {
+    background-color: #f0f9ff;
+    border-left: 4px solid #0284c7;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 12px 0;
+    font-size: 9.5pt;
+  }
+
+  .pass-box {
+    background-color: #0f172a;
+    color: #38bdf8;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 8pt;
+    padding: 12px;
+    border-radius: 6px;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.35;
+    margin: 12px 0;
+  }
+
+  .code-block {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 8pt;
+    padding: 8px 12px;
+    margin: 10px 0;
+    color: #0f172a;
+    white-space: pre-wrap;
+    line-height: 1.35;
+  }
+
+  .screenshot-placeholder {
+    border: 2px dashed #94a3b8;
+    background-color: #f8fafc;
+    border-radius: 6px;
+    padding: 16px;
+    text-align: center;
+    margin: 12px 0;
+    page-break-inside: avoid;
+  }
+
+  .screenshot-placeholder h4 {
+    margin: 0 0 4px 0;
+    font-size: 9.5pt;
+    color: #334155;
+    font-weight: 700;
+  }
+
+  .screenshot-placeholder p {
+    margin: 0;
+    font-size: 8.5pt;
+    color: #64748b;
+    text-align: center;
+  }
+
+  /* Architecture SVG Diagram */
+  .diagram-container {
+    text-align: center;
+    margin: 16px 0;
+    page-break-inside: avoid;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-after: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  .footer-note {
+    text-align: center;
+    font-size: 8pt;
+    color: #94a3b8;
+    margin-top: 30px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== HEADER & COVER INFO ==================== -->
+  <div class="cover-header">
+    <div class="dept-title">Department of Computer Engineering / Information Technology</div>
+    <div class="course-title">Course: Data Structures and Algorithms Laboratory | Academic Year: 2026–2027</div>
+    <div class="project-badge">Academic Mini Project Report</div>
+    <h1 class="main-title">Flight Booking and Seat Management System</h1>
+    <div class="sub-title">An Algorithmic Reservation and Inventory Architecture Implemented Using Fundamental Data Structures (Doubly Linked Lists, FIFO Queues, LIFO Stacks, 1D Arrays, and Binary Search)</div>
+
+    <table class="students-table">
+      <thead>
+        <tr>
+          <th style="width: 8%; text-align: center;">Sr. No.</th>
+          <th style="width: 32%;">Student Name</th>
+          <th style="width: 25%;">Roll Number / ID</th>
+          <th style="width: 35%;">Project Contribution / Assigned Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: center; font-weight: bold;">1</td>
+          <td><strong>Malhar Mahajan</strong></td>
+          <td><strong>25108B0029</strong></td>
+          <td>Project Lead, Doubly Linked List &amp; Web GUI Architecture</td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold;">2</td>
+          <td><strong>Shubham Patil</strong></td>
+          <td><strong>25108B0005</strong></td>
+          <td>Waiting List FIFO Queue &amp; Seat Allocation Matrix</td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold;">3</td>
+          <td><strong>Tejas Wable</strong></td>
+          <td><strong>25108B0004</strong></td>
+          <td>Cancellation LIFO Stack &amp; Multi-Step Undo Mechanism</td>
+        </tr>
+        <tr>
+          <td style="text-align: center; font-weight: bold;">4</td>
+          <td><strong>Rohit Gondhali</strong></td>
+          <td><strong>25108B0031</strong></td>
+          <td>Binary Search Engine, Multi-Key Sorting &amp; Testing Suite</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ==================== 1. ABSTRACT ==================== -->
+  <h2 class="section-heading">1. Abstract</h2>
+  <div class="callout-box">
+    Modern airline passenger reservation systems necessitate low-latency, deterministic data handling for ticket reservations, seat category allocation, cancellations, and waiting list updates. This project presents the design and implementation of a robust <strong>Flight Booking and Seat Management System</strong> engineered in Python using purely native, foundational data structures without relying on high-level database engines or external third-party collection libraries. The system utilizes: (1) A <strong>Doubly Linked List</strong> with an <em>O(1)</em> prepend operation to store confirmed passengers and immediately display newest bookings at the top; (2) A <strong>FIFO Singly Linked Queue</strong> with front and rear pointers to manage fair passenger waitlisting and automated promotion upon seat cancellation; (3) A <strong>Fixed-Capacity LIFO Stack</strong> to record cancellations and provide multi-level undo functionality; (4) A <strong>1D Array Representation</strong> for dynamic seat inventory tracking across Window (₹1,200), Middle (₹1,000), and Aisle (₹900) tiers; and (5) Optimized <strong>Binary Search (<em>O(log N)</em>)</strong> and <strong>Insertion/Bubble Sort</strong> routines for rapid passenger lookups by PNR, Name, and Age. Evaluated through both a terminal CLI and an interactive, responsive Web Dashboard running on Python's built-in HTTP server, the system successfully demonstrates complete transaction atomicity, real-time ticket generation, and zero data inconsistency under boundary constraints.
+  </div>
+
+  <!-- ==================== 2. INTRODUCTION ==================== -->
+  <h2 class="section-heading">2. Introduction</h2>
+  <h3 class="sub-heading">2.1 Problem Statement</h3>
+  <p>
+    Commercial flight reservation processes encounter severe operational bottlenecks when processing high-frequency transactions involving seat selection, queue transitions, and last-minute cancellations. Standard enterprise implementations often introduce unnecessary overhead when modeling atomic, in-memory state changes. The primary challenge is to construct an in-memory passenger reservation and inventory control engine that satisfies strict algorithmic time and space complexity constraints:
+  </p>
+  <ul>
+    <li>Instantaneous (<em>O(1)</em>) priority addition and chronological head-placement of newly reserved tickets.</li>
+    <li>Strictly fair, starvation-free First-In-First-Out (FIFO) queue handling for excess passenger overflow.</li>
+    <li>Reversible Last-In-First-Out (LIFO) transaction rollbacks for ticket cancellation undos.</li>
+    <li>Real-time seat inventory mapping with category-based fare computing.</li>
+  </ul>
+
+  <h3 class="sub-heading">2.2 Project Objectives</h3>
+  <ol>
+    <li><strong>Pure Data Structure Design:</strong> Implement all core data storage components from scratch using foundational object-oriented pointer references and arrays.</li>
+    <li><strong>Automated Queue Promotion:</strong> Automatically promote the front passenger in the waiting queue into the confirmed passenger list whenever an active seat is cancelled, immediately assigning the newly vacated seat number.</li>
+    <li><strong>Seat Matrix &amp; Dynamic Pricing:</strong> Segment an aircraft cabin into distinct seat classifications (Window @ ₹1,200, Middle @ ₹1,000, Aisle @ ₹900) and track real-time occupancy.</li>
+    <li><strong>Fast Searching &amp; Sorting:</strong> Allow ground crew and users to search passengers by unique Passenger Name Record (PNR) in <em>O(log N)</em> time, and sort passenger manifests dynamically by Age and Name.</li>
+    <li><strong>Interactive User Interfaces:</strong> Provide an intuitive, modern Web Dashboard (HTML5/CSS3/JavaScript) and a comprehensive Command-Line Interface (CLI).</li>
+  </ol>
+
+  <h3 class="sub-heading">2.3 Scope and Significance</h3>
+  <p>
+    This project bridges theoretical computer science education with real-world software engineering. By mapping distinct real-world requirements to specific data structures, students gain practical insight into algorithmic efficiency, memory references, pointer manipulation, and GUI-backend integration.
+  </p>
+
+  <div class="page-break"></div>
+
+  <!-- ==================== 3. SYSTEM ANALYSIS & DESIGN ==================== -->
+  <h2 class="section-heading">3. System Analysis &amp; Design</h2>
+  <h3 class="sub-heading">3.1 Hardware and Software Requirements</h3>
+  <ul>
+    <li><strong>Hardware:</strong> 64-bit Intel Core i3 / AMD Ryzen 3 / Apple Silicon M-series or higher; 2 GB RAM minimum; 100 MB free storage.</li>
+    <li><strong>Software:</strong> Windows 10/11, macOS, or Linux; Python 3.8 to 3.12 (Standard Library only; zero pip dependencies); Modern Web Browser (Chrome, Safari, Firefox, Edge).</li>
+  </ul>
+
+  <h3 class="sub-heading">3.2 System Architecture Diagram</h3>
+  <div class="diagram-container">
+    <svg width="680" height="220" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+      <!-- Presentation Layer -->
+      <rect x="20" y="10" width="640" height="42" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+      <text x="340" y="34" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">PRESENTATION LAYER: Modern Web Dashboard (Port 5050) &amp; Terminal CLI Interface</text>
+      
+      <!-- Arrow 1 -->
+      <line x1="340" y1="52" x2="340" y2="76" stroke="#0284c7" stroke-width="2" marker-end="url(#arrow)"/>
+
+      <!-- Controller Layer -->
+      <rect x="140" y="78" width="400" height="38" rx="6" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+      <text x="340" y="102" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">CORE CONTROLLER: FlightBookingManager (Unified Transaction Facade)</text>
+
+      <!-- Connecting Lines -->
+      <line x1="220" y1="116" x2="80" y2="150" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="280" y1="116" x2="210" y2="150" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="340" y1="116" x2="340" y2="150" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="400" y1="116" x2="470" y2="150" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="460" y1="116" x2="600" y2="150" stroke="#64748b" stroke-width="1.5"/>
+
+      <!-- Core Data Structures -->
+      <rect x="10" y="150" width="125" height="58" rx="5" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+      <text x="72" y="172" font-family="sans-serif" font-size="9" font-weight="bold" fill="#15803d" text-anchor="middle">Doubly Linked List</text>
+      <text x="72" y="188" font-family="sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">Confirmed Tickets</text>
+      <text x="72" y="200" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#0284c7" text-anchor="middle">O(1) Prepend</text>
+
+      <rect x="145" y="150" width="125" height="58" rx="5" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+      <text x="207" y="172" font-family="sans-serif" font-size="9" font-weight="bold" fill="#a16207" text-anchor="middle">Singly Linked Queue</text>
+      <text x="207" y="188" font-family="sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">Waiting List Queue</text>
+      <text x="207" y="200" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#0284c7" text-anchor="middle">O(1) FIFO En/Dequeue</text>
+
+      <rect x="280" y="150" width="120" height="58" rx="5" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="340" y="172" font-family="sans-serif" font-size="9" font-weight="bold" fill="#b91c1c" text-anchor="middle">LIFO Array Stack</text>
+      <text x="340" y="188" font-family="sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">Cancellation History</text>
+      <text x="340" y="200" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#0284c7" text-anchor="middle">O(1) Undo Stack</text>
+
+      <rect x="410" y="150" width="120" height="58" rx="5" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="470" y="172" font-family="sans-serif" font-size="9" font-weight="bold" fill="#6d28d9" text-anchor="middle">1D Seat Matrix</text>
+      <text x="470" y="188" font-family="sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">Seats 1-12 &amp; Fares</text>
+      <text x="470" y="200" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#0284c7" text-anchor="middle">O(1) Index Lookup</text>
+
+      <rect x="540" y="150" width="130" height="58" rx="5" fill="#ecfeff" stroke="#0891b2" stroke-width="1.5"/>
+      <text x="605" y="172" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0e7490" text-anchor="middle">Search &amp; Sort Engine</text>
+      <text x="605" y="188" font-family="sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">Binary Search &amp; Sort</text>
+      <text x="605" y="200" font-family="sans-serif" font-size="7.5" font-weight="bold" fill="#0284c7" text-anchor="middle">O(log N) PNR Find</text>
+    </svg>
+  </div>
+
+  <h3 class="sub-heading">3.3 Data Structure Mapping &amp; Time/Space Complexity</h3>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th style="width: 24%;">Module / Feature</th>
+        <th style="width: 26%;">Chosen Data Structure</th>
+        <th style="width: 24%;">Primary Algorithmic Technique</th>
+        <th style="width: 13%; text-align: center;">Time Complexity</th>
+        <th style="width: 13%; text-align: center;">Space Complexity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Confirmed Passengers</strong></td>
+        <td>Doubly Linked List (<code>TicketList</code>)</td>
+        <td>Head Prepend &amp; Pointer Relinking</td>
+        <td style="text-align: center;"><em>O(1)</em> Insert</td>
+        <td style="text-align: center;"><em>O(N)</em></td>
+      </tr>
+      <tr>
+        <td><strong>Waiting List Overflow</strong></td>
+        <td>Singly Linked Queue (<code>Queue</code>)</td>
+        <td>Head Dequeue &amp; Tail Enqueue</td>
+        <td style="text-align: center;"><em>O(1)</em> Push/Pop</td>
+        <td style="text-align: center;"><em>O(W)</em></td>
+      </tr>
+      <tr>
+        <td><strong>Cancellation History &amp; Undo</strong></td>
+        <td>Fixed-Capacity Array Stack (<code>Stack</code>)</td>
+        <td>Top Pointer Increment / Decrement</td>
+        <td style="text-align: center;"><em>O(1)</em> Push/Pop</td>
+        <td style="text-align: center;"><em>O(K)</em></td>
+      </tr>
+      <tr>
+        <td><strong>Seat Inventory &amp; Pricing</strong></td>
+        <td>1D Array (<code>SeatMap</code>)</td>
+        <td>Direct Array Indexing <code>seats[seat_no-1]</code></td>
+        <td style="text-align: center;"><em>O(1)</em> Lookup</td>
+        <td style="text-align: center;"><em>O(1)</em> (Capacity 12)</td>
+      </tr>
+      <tr>
+        <td><strong>PNR Fast Lookup</strong></td>
+        <td>Sorted Array (<code>BinarySearch</code>)</td>
+        <td>Divide and Conquer Search</td>
+        <td style="text-align: center;"><em>O(log N)</em></td>
+        <td style="text-align: center;"><em>O(1)</em> auxiliary</td>
+      </tr>
+      <tr>
+        <td><strong>Manifest Display Sorting</strong></td>
+        <td>In-place Bubble / Insertion Sort</td>
+        <td>Pairwise comparison and shift</td>
+        <td style="text-align: center;"><em>O(N²)</em> worst, <em>O(N)</em> best</td>
+        <td style="text-align: center;"><em>O(1)</em> auxiliary</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== 4. IMPLEMENTATION & MODULE DETAILS ==================== -->
+  <h2 class="section-heading">4. Implementation &amp; Module Details</h2>
+  
+  <h3 class="sub-heading">4.1 Confirmed Passenger Storage via Doubly Linked List (<code>confirmed_tickets.py</code>)</h3>
+  <p>
+    Standard lists or dynamic arrays require <em>O(N)</em> element shifting when prepending elements. To ensure that newly booked passengers appear immediately at the top of the confirmed manifest in <strong><em>O(1)</em> time</strong>, a Doubly Linked List is employed. Each <code>TicketNode</code> maintains references to the passenger record, <code>prev</code> node, and <code>next</code> node.
+  </p>
+  <div class="code-block">def prepend(self, record):
+    """Inserts newly booked passenger at the head of the list in O(1) time."""
+    new_node = TicketNode(record)
+    if self.is_empty():
+        self.head = self.tail = new_node
+    else:
+        new_node.next = self.head
+        self.head.prev = new_node
+        self.head = new_node
+    self._size += 1</div>
+
+  <h3 class="sub-heading">4.2 Fair Waiting List via Singly Linked Queue (<code>waiting_queue.py</code>)</h3>
+  <p>
+    Overbooked passengers are appended to a FIFO Queue. Separate <code>head_node</code> and <code>tail_node</code> pointers ensure <em>O(1)</em> enqueue and dequeue operations. When any confirmed seat is cancelled, the front passenger in the queue is automatically dequeued, granted confirmed status, and assigned the vacated seat.
+  </p>
+
+  <h3 class="sub-heading">4.3 Cancellation History and Undo via Array Stack (<code>cancellation_stack.py</code>)</h3>
+  <p>
+    A fixed-size array stack implements LIFO rollback semantics. Whenever a ticket is cancelled, its snapshot is pushed onto the stack. Invoking the "Undo Cancellation" routine pops the top record, validates seat availability, and restores the passenger to active confirmed status.
+  </p>
+
+  <h3 class="sub-heading">4.4 Cabin Layout &amp; Dynamic Seat Pricing Engine (<code>seat_allocation.py</code>)</h3>
+  <p>
+    The aircraft represents a 12-seat single-aisle regional layout. Fares are computed deterministically:
+  </p>
+  <ul>
+    <li><strong>Window Seats (Seats 1, 4, 7, 10, 3, 6, 9, 12):</strong> ₹1,200 (Highest passenger preference)</li>
+    <li><strong>Middle Seats (Seats 2, 5, 8, 11):</strong> ₹1,000 (Standard economy comfort)</li>
+    <li><strong>Aisle Classification:</strong> ₹900 (Quick cabin egress)</li>
+    <li><strong>Total Full-Flight Inventory Revenue:</strong> ₹12,400 across all 12 seats.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- ==================== 5. RESULTS AND DISCUSSION ==================== -->
+  <h2 class="section-heading">5. Results and Discussion</h2>
+
+  <h3 class="sub-heading">5.1 Verification Test Cases and Execution Summary</h3>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th style="width: 12%; text-align: center;">Test ID</th>
+        <th style="width: 25%;">Test Description</th>
+        <th style="width: 28%;">Input Parameters</th>
+        <th style="width: 25%;">Expected Result</th>
+        <th style="width: 10%; text-align: center;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-01</td>
+        <td>Booking Available Seat</td>
+        <td>Name: Malhar, Age: 20, Seat: 7</td>
+        <td>Seat 7 allocated (₹1,200), PNR AI-1001 generated, node prepended.</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-02</td>
+        <td>Confirmed List Ordering</td>
+        <td>New passenger booking</td>
+        <td>New passenger displays at Row #1 in manifest (<em>O(1)</em> prepend).</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-03</td>
+        <td>Flight Capacity Saturation</td>
+        <td>13th passenger booking attempt</td>
+        <td>Prompt waitlist; passenger queued as <code>WAITLISTED</code> (WL-1).</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-04</td>
+        <td>Auto Waitlist Promotion</td>
+        <td>Cancel confirmed ticket (Seat 3)</td>
+        <td>Seat 3 freed; front waitlisted passenger promoted and allocated Seat 3.</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-05</td>
+        <td>Undo Cancellation</td>
+        <td>Invoke "Undo Cancellation"</td>
+        <td>Most recently cancelled ticket popped from stack and re-confirmed.</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-06</td>
+        <td>Binary Search on PNR</td>
+        <td>Search PNR <code>"AI-1007"</code></td>
+        <td>Record located in ≤ 4 comparisons using <em>O(log N)</em> Binary Search.</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+      <tr>
+        <td style="text-align: center; font-weight: bold;">TC-07</td>
+        <td>Manifest Sorting</td>
+        <td>Sort by Age ascending</td>
+        <td>Manifest displayed in strictly non-decreasing order of passenger age.</td>
+        <td style="text-align: center; font-weight: bold; color: #16a34a;">PASS</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="sub-heading">5.2 Generated Boarding Pass Sample</h3>
+  <div class="pass-box">================================================================================
+                        AIRWAYS BOARDING PASS
+================================================================================
+ PASSENGER NAME : Malhar Mahajan                  PNR NO     : AI-1007
+ AGE            : 20 Years                        SEAT NO    : 07 (Window)
+ FLIGHT         : AI-204 (Mumbai to Delhi)        STATUS     : CONFIRMED
+ BOARDING TIME  : 09:30 AM                        GATE       : G-04
+ FARE PAID      : INR 1,200                       CLASS      : Economy Standard
+================================================================================
+ Please be at the boarding gate at least 45 minutes prior to departure.
+================================================================================</div>
+
+  <h3 class="sub-heading">5.3 Screenshot Walkthrough Guides</h3>
+  <div style="text-align: center; margin: 12px 0;">
+    <img src="images/screenshot1_seat_map.png" alt="Screenshot 1: Web Dashboard Seat Map" style="max-width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+    <p style="font-size: 8pt; color: #64748b; font-style: italic; margin-top: 4px;">Figure 5.1: Web Dashboard showing interactive 12-seat matrix, dynamic fares, and booking form.</p>
+  </div>
+
+  <div class="screenshot-placeholder">
+    <h4>[SCREENSHOT 2: CONFIRMED PASSENGER MANIFEST (NEWEST BOOKINGS FIRST)]</h4>
+    <p>Displays confirmed tickets table where newly booked passengers appear at Row #1 with PNR, Name, Age, Seat No., Fare, and Cancel button.</p>
+  </div>
+
+  <div class="screenshot-placeholder">
+    <h4>[SCREENSHOT 3: WAITING LIST QUEUE &amp; CANCELLATION STACK]</h4>
+    <p>Displays real-time FIFO Waiting List table and Undo Cancellation action button showing current stack count.</p>
+  </div>
+
+  <div class="screenshot-placeholder">
+    <h4>[SCREENSHOT 4: PNR SEARCH &amp; DYNAMIC SORTING MODAL]</h4>
+    <p>Shows Binary Search output reporting step-by-step search comparisons and formatted Boarding Pass modal dialog.</p>
+  </div>
+
+  <!-- ==================== 6. CONCLUSION & FUTURE SCOPE ==================== -->
+  <h2 class="section-heading">6. Conclusion and Future Scope</h2>
+  <h3 class="sub-heading">6.1 Conclusion</h3>
+  <p>
+    The <strong>Flight Booking and Seat Management System</strong> successfully demonstrates that foundational computer science data structures (Doubly Linked Lists, Singly Linked Queues, Array Stacks, and Direct-Index Arrays) can form a robust, high-performance airline reservation engine without relying on opaque databases. The application guarantees fair waitlist management, <em>O(1)</em> recent booking access, reversible cancellations, and <em>O(log N)</em> search lookups.
+  </p>
+
+  <h3 class="sub-heading">6.2 Future Scope</h3>
+  <ul>
+    <li><strong>Multi-Sector Flight Routing:</strong> Extend the architecture to handle connecting flights using Directed Acyclic Graphs (DAG).</li>
+    <li><strong>Persistent Database Backing:</strong> Implement serialized B-Trees or lightweight disk persistence to retain booking state across system restarts.</li>
+    <li><strong>Dynamic Surge Pricing:</strong> Implement real-time demand-based surge pricing algorithms using Min/Max Heap priority structures.</li>
+    <li><strong>Role-Based Security &amp; Payment Gateway:</strong> Add role-based authentication and secure payment gateway simulation with promo codes.</li>
+  </ul>
+
+  <!-- ==================== 7. REFERENCES ==================== -->
+  <h2 class="section-heading">7. References</h2>
+  <ol>
+    <li><strong>Horowitz, E., Sahni, S., &amp; Anderson-Freed, S.</strong> <em>Fundamentals of Data Structures in C</em>, 2nd Edition, Universities Press, 2008.</li>
+    <li><strong>Cormen, T. H., Leiserson, C. E., Rivest, R. L., &amp; Stein, C.</strong> <em>Introduction to Algorithms</em>, 3rd Edition, MIT Press, 2009.</li>
+    <li><strong>Goodrich, M. T., Tamassia, R., &amp; Goldwasser, M. H.</strong> <em>Data Structures and Algorithms in Python</em>, John Wiley &amp; Sons, 2013.</li>
+    <li><strong>Python Software Foundation:</strong> Python Standard Library Documentation (Built-in Types &amp; <code>http.server</code>): <a href="https://docs.python.org/3/library/">https://docs.python.org/3/library/</a></li>
+    <li><strong>Mozilla Developer Network (MDN):</strong> <em>CSS Grid and Responsive Design Patterns for Interactive UI Components</em>: <a href="https://developer.mozilla.org/">https://developer.mozilla.org/</a></li>
+  </ol>
+
+  <div class="footer-note">
+    Flight Booking and Seat Management System — Academic Mini Project Report | Submitted by Group 4
+  </div>
+
+</body>
+</html>
